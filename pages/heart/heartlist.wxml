@@ -1,0 +1,17 @@
+<view class="container">
+
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="background:gray;height: 100%;width:100%;" 
+  bindscroll="scrollV" bindscrolltolower="bindDownload" bindscrolltoupper="refresh">    
+    <view style='width:100%;height:70px;marginTop:2px' 
+    wx:for="{{order}}"  wx:key="*this" wx:for-item="colorVal">
+      <text style='background:{{colorVal}};color:white'>{{colorVal}}</text>
+    </view>
+    
+  </scroll-view>
+
+  <!-- 显示加载更多 -->
+  <view>
+    <loading hidden="{{loadingHidden}}" bindchange="{{loadingChange}}">加载中...{{scrollLog}}</loading>
+  </view>
+
+</view>
