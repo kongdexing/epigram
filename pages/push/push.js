@@ -28,12 +28,10 @@ Page({
   },
 
   formSubmit:function(e){
-  
-    var val = this.data.epigramVal;
-
     var Epigram = Bmob.Object.extend("epigram");
     var epigram = new Epigram();
-    epigram.set("say", val);
+    epigram.set("say", this.data.epigramVal);
+    epigram.set("color", this.data.broadColor);
     //添加数据，第一个入口参数是null
     epigram.save(null, {
       success: function (result) {
