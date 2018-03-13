@@ -1,7 +1,7 @@
 
 <view>
 <form bindsubmit="formSubmit" >
-  <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来"  placeholder-style="color:white;" maxlength='100' auto-focus='true' focus='true' />
+  <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来"  placeholder-style="color:white;" maxlength='200' auto-focus='true' focus='true' />
 
   <!--多彩板 gradview  -->
   <view>
