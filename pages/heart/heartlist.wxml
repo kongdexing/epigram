@@ -3,8 +3,20 @@
   <scroll-view scroll-top="{{scrollTop}}" scroll-y="true"
   bindscroll="scrollV" bindscrolltolower="pullUpLoad" bindscrolltoupper="refresh">
 
-    <view style='width:100%;marginTop:20px;' wx:for="{{epigramList}}" wx:key="epItme" style='background:{{item.color}}'>
-      <text style='color:white;font-size:16px;'>{{item.say}}</text>
+    <view style='background:{{item.color}};flex-direction:column;' class='board' wx:for="{{epigramList}}" wx:key="epItem">
+      <text class='board-text'>{{item.say}}</text>
+
+    <view style='flex-direction:row;display:flex;'>
+      <view bindtap='clickGood' data-id="{{item.objectId}}" data-good="{{item.good}}" style='background:red;'>
+       <image class='board-img1' src='../image/icon_good.png'></image>
+       <text class='board-dot'>{{item.good}}</text>
+      </view>
+
+      <view bindtap='clickHug' data-id="{{item.objectId}}" data-hug="{{item.hug}}" style='background:purple;'>
+       <image class='board-img2' src='../image/icon_hug.png'></image>
+       <text class='board-dot'>{{item.hug}}</text>
+      </view>
+    </view>
     </view>
     
   </scroll-view>

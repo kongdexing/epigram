@@ -1,6 +1,6 @@
 .push-area{
   width: 95%;
-  margin: 4px;
+  margin: 5px;
   padding:10rpx;
   border-radius: 4px;
   color:white;
@@ -10,10 +10,12 @@
   border-radius: 30px;
   font-size: 17px;
 }
+
 .scroll-view_H{
   width: 100%;
   white-space: nowrap;
 }
+
 .scroll-view-item_H{
   display: inline-block;
   margin-left: 10px;

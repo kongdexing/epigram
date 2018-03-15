@@ -1,8 +1,8 @@
   {
   "pages":[
-    "pages/push/push",
-    "pages/heart/heartlist",
     
+    "pages/heart/heartlist",
+    "pages/push/push",
     "pages/mine/me"    
   ],
   "window":{
