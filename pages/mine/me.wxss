@@ -1,23 +1,27 @@
 /**index.wxss**/
 .userinfo {
   display: flex;
-  flex-direction: column;
+  flex-direction:row;
+  background-color:bisque;
   align-items: left;
 }
 
+.userinfo-nickname{
+  align-self:center;
+  color: #aaa;
+  margin-left: 20rpx;
+}
+
 .userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
+  width: 100rpx;
+  height: 100rpx;
   margin: 20rpx;
   border-radius: 50%;
 }
 
-.userinfo-nickname {
-  color: #aaa;
-  width: 128rpx;
-  margin-left: 20rpx;
-  text-align: center;
-}
+/* .userinfo-nickname {
+  
+} */
 
 .usermotto {
   margin-top: 200px;
