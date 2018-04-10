@@ -1,20 +1,19 @@
-
 <view>
-<form bindsubmit="formSubmit" >
-  <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来"  placeholder-style="color:white;" maxlength='200' auto-focus='true' focus='true' />
+  <form bindsubmit="formSubmit">
+    <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来" placeholder-style="color:white;" maxlength='200' auto-focus='true' focus='true' />
 
-  <!--多彩板 gradview  -->
-  <view>
-        <view class="weui-grids">
-            <block wx:for="{{broadCols}}" wx:key="*this" wx:for-item="colorVal">
-                <navigator url="" open-type='redirect' class="weui-grid" hover-class="weui-grid_active">
-                    <view class="weui-grid__label" bindtap='changeTextColor' data-broadcolor="{{colorVal}}" style="background:{{colorVal}};color:{{colorVal}}">1</view>
-                </navigator>
-            </block>
-        </view>
+    <!--多彩板 gradview  -->
+    <view>
+      <view class="weui-grids">
+        <block wx:for="{{broadCols}}" wx:key="*this" wx:for-item="colorVal">
+          <navigator url="" open-type='redirect' class="weui-grid" hover-class="weui-grid_active">
+            <view class="weui-grid__label" bindtap='changeTextColor' data-broadcolor="{{colorVal}}" style="background:{{colorVal}};color:{{colorVal}}">1</view>
+          </navigator>
+        </block>
+      </view>
     </view>
 
-  <button style='width:40%;marginTop:20rpx;' form-type="submit">提交</button>
+    <button style='width:40%;marginTop:20rpx;' form-type="submit">提交</button>
 
-</form>
+  </form>
 </view>

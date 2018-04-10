@@ -1,29 +1,48 @@
 <view class="container">
 
-  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true"
-  bindscroll="scrollV" bindscrolltolower="pullUpLoad" bindscrolltoupper="refresh">
-
-    <view style='background:{{item.color}};flex-direction:column;' class='board' wx:for="{{epigramList}}" wx:key="epItem">
-      <text class='board-text'>{{item.say}}</text>
-
-    <view style='flex-direction:row;display:flex;'>
-      <view bindtap='clickGood' data-id="{{item.objectId}}" data-good="{{item.good}}" style='background:red;'>
-       <image class='board-img1' src='../image/icon_good.png'></image>
-       <text class='board-dot'>{{item.good}}</text>
-      </view>
-
-      <view bindtap='clickHug' data-id="{{item.objectId}}" data-hug="{{item.hug}}" style='background:purple;'>
-       <image class='board-img2' src='../image/icon_hug.png'></image>
-       <text class='board-dot'>{{item.hug}}</text>
-      </view>
-    </view>
-    </view>
-    
-  </scroll-view>
+<scroll-view scroll-y="true" class="container" lower-threshold="5" bindscrolltolower="lower">
+    <block wx:for="{{epigramList}}">
+        <view class="feed-item" style='background:{{item.color}}'>
+            <view class="feed-source">
+                <a>
+                    <view class="avatar">
+                        <image src="{{item.avatarUrl}}"></image>
+                    </view>
+                    <text>{{item.nickName}}</text>
+                </a>
+                <text class="item-more">{{item.createdAt}}</text>
+            </view>
+            <view class="feed-content">
+                <view class="answer-body">
+                    <view bindtap="bindItemTap">
+                        <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
+                    </view>
+                    <view class="answer-actions" style='display: none' bindtap="bindItemTap">
+                        <view class="like dot">
+                            <a>{{item.good}} 顶</a>
+                        </view>
+                        <view class="comments dot">
+                            <a>{{item.hug}} 踩 </a>
+                        </view>
+                        <!--<view class="follow-it">
+                            <a>关注问题</a>
+                        </view>-->
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+</scroll-view>
 
   <!-- 显示加载更多 -->
   <view>
     <loading hidden="{{loadingHidden}}" bindchange="{{loadingChange}}">加载中...</loading>
   </view>
 
+</view>
+
+<view class="shortCutBtn">
+  <view class="createBtn">
+    <image src="../image/icon_push.png" bindtap="createBtnClick" bindtouchstart='createBtnHover' bindtouchend='createBtnHoverEnd'></image>
+  </view>
 </view>

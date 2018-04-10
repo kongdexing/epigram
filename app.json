@@ -13,14 +13,14 @@
     "enablePullDownRefresh": true
   },
   "tabBar": {
+    "color": "#626567",
+    "selectedColor": "#2A8CE5",
+    "backgroundColor": "#FBFBFB",
+    "borderStyle": "white",
     "list": [
     {
       "pagePath": "pages/heart/heartlist",
       "text": "心事墙"
-    },
-    {
-      "pagePath": "pages/push/push",
-      "text": "发布"
     },
     {
       "pagePath": "pages/mine/me",
