@@ -1,7 +1,57 @@
 <!--index.wxml-->
-<view class="container">
+<view class="stv-container">
   <view class="userinfo">
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
-</view>
+
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="unique" data-index="{{index}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">
+      <text>{{item}}</text>
+    </view>
+    <view style="width: {{stv.lineWidth}}px; left: {{stv.offset/tabs.length}}px" class="under-line {{!stv.tStart? 'withAnimate': ''}}"></view>
+  </view>
+
+  <view class="scroll-view">
+    <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
+      <scroll-view scroll-y="true" class="container" lower-threshold="5" bindscrolltolower="lower">
+        <block wx:for="{{epigramList}}">
+          <view class="feed-item" style='background:{{item.color}}'>
+            <view class="feed-source">
+              <a>
+                <view class="avatar">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <text>{{item.nickName}}</text>
+              </a>
+              <text class="item-more">{{item.createdAt}}</text>
+            </view>
+            <view class="feed-content">
+              <view class="answer-body">
+                <view bindtap="bindItemTap">
+                  <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
+                </view>
+                <view class="answer-actions" style='display: none' bindtap="bindItemTap">
+                  <view class="like dot">
+                    <a>{{item.good}} 顶</a>
+                  </view>
+                  <view class="comments dot">
+                    <a>{{item.hug}} 踩 </a>
+                  </view>
+                  <!--<view class="follow-it">
+                            <a>关注问题</a>
+                        </view>-->
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    </view>
+      <!-- 显示加载更多 -->
+      <view>
+        <loading hidden="{{loadingHidden}}" bindchange="{{loadingChange}}">加载中...</loading>
+      </view>
+
+    </view>

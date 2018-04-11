@@ -8,6 +8,7 @@
   justify-content: space-between;
   padding: 0 0;
   box-sizing: border-box;
+  
 }
 
 .container .feed-item{
