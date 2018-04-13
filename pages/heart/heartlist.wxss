@@ -4,8 +4,8 @@
 
 .shortCutBtn {
 	position: fixed;
-	right: 2%;
-	bottom: 2%;
+	right: 5%;
+	bottom: 5%;
 }
 
 .createBtn image {

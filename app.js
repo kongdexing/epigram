@@ -52,21 +52,47 @@ App({
 })
 
 function getUserOpenId() {
+  // wx.showToast({
+  //   title: "getUserOpenId",
+  //   image: '../pages/image/success.png',
+  //   duration: 1000
+  // });
+
   console.log("App getUserOpenId");
+  
   wx.login({
-    success: function (code) {
+    success: function (res) {
+
+      wx.showToast({
+        title: res.code,
+        image: '../pages/image/warning.png',
+        duration: 3000
+      });
+      console.log("login success result code is "+res.code);    
+
       wx.request({
-        url: 'https://api.weixin.qq.com/sns/jscode2session',
+        url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
         data: {
-          appid: 'wxb4ddb059c36f48c3',
-          secret: 'cf6d03f9d3e77b43ec9d5f2c34e090ed',
-          js_code: code.code,
-          grant_type: 'authorization_code'
+          js_code: res.code,
         },
         success: function (openIdResult) {
-          let openid = openIdResult.data.openid;
-          that.globalData.openId = openid;
-          console.log('app openId:' + openid);
+          // let openid = openIdResult.data.openid;
+          // that.globalData.openId = openid;
+          // wx.showToast({
+          //   title: openid,
+          //   image: '../pages/image/warning.png',
+          //   duration: 1000
+          // });
+          console.log('app openId:' + openIdResult.data.info);
+          console.log('app openId:' + openIdResult.data.info.openid);
+        },
+        fail:function(result){
+          wx.showToast({
+            title: result,
+            image: '../pages/image/warning.png',
+            duration: 1000
+          });
+          console.log('get user openId fail '+result);
         }
       })
     }

@@ -145,26 +145,26 @@ Page({
 })
 
 function getList() {
-  var Epigram = Bmob.Object.extend("epigram");
-  var query = new Bmob.Query(Epigram);
-  // 查询所有数据
-  query.limit(that.data.limit);
-  query.descending("createdAt");
-  query.find({
-    success: function (results) {
-      wx.stopPullDownRefresh();
-      // 循环处理查询到的数据
-      that.setData({
-        loadingHidden: true,
-        epigramList: results
-      })
-    },
-    error: function (error) {
-      wx.stopPullDownRefresh();
-      that.setData({
-        loadingHidden: true
-      })
-      console.log("查询失败: " + error.code + " " + error.message);
-    }
-  });
+  // var Epigram = Bmob.Object.extend("epigram");
+  // var query = new Bmob.Query(Epigram);
+  // // 查询所有数据
+  // query.limit(that.data.limit);
+  // query.descending("createdAt");
+  // query.find({
+  //   success: function (results) {
+  //     wx.stopPullDownRefresh();
+  //     // 循环处理查询到的数据
+  //     that.setData({
+  //       loadingHidden: true,
+  //       epigramList: results
+  //     })
+  //   },
+  //   error: function (error) {
+  //     wx.stopPullDownRefresh();
+  //     that.setData({
+  //       loadingHidden: true
+  //     })
+  //     console.log("查询失败: " + error.code + " " + error.message);
+  //   }
+  // });
 }

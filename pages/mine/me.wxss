@@ -58,11 +58,6 @@
 .stv-container .scroll-view .scroll-view-wrapper .one-scene {
   height: 100%;
 }
-.one-scene text {
-  display: flex;
-  justify-content: center;
-  padding-top: 200rpx;
-}
 
 .userinfo {
   display: flex;

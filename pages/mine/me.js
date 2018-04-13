@@ -60,6 +60,12 @@ Page({
   },
 
   onLoad: function () {
+    wx.showToast({
+      title: app.globalData.openId,
+      image: '../image/warning.png',
+      duration: 3000
+    });
+
     try {
       let { tabs } = this.data;
       var res = wx.getSystemInfoSync()
@@ -186,10 +192,16 @@ Page({
 })
 
 function getList() {
-
   var wxId = app.globalData.openId;
-
   console.log('11 wxId:' + wxId);
+  if(wxId==""){
+    wx.showToast({
+      title: "未获取用户ID",
+      image: '../image/warning.png',
+      duration: 1000
+    });
+    return;
+  }
 
   var Epigram = Bmob.Object.extend("epigram");
   var query = new Bmob.Query(Epigram);

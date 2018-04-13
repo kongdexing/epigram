@@ -1,8 +1,8 @@
   {
   "pages":[
-    "pages/mine/me",
     "pages/heart/heartlist",
-    "pages/push/push"  
+    "pages/mine/me",
+    "pages/push/push"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -19,10 +19,14 @@
     "list": [
     {
       "pagePath": "pages/heart/heartlist",
+      "iconPath": "pages/image/icon1_def.png",
+      "selectedIconPath": "pages/image/icon1_pre.png",
       "text": "心事墙"
     },
     {
       "pagePath": "pages/mine/me",
+      "iconPath": "pages/image/icon2_def.png",
+      "selectedIconPath": "pages/image/icon2_pre.png",
       "text": "我的"
     }]
   },

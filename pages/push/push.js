@@ -11,7 +11,6 @@ Page({
     epigramVal: "",
     btnVal: "1",
     userInfo: {},
-    openId: "",
     broadColor: "#6e7d8f",
     broadCols: ["#3c3d3c", "#f5d575", "#f69595", "#c5a6c1", "#71aaa9", "#90cbe3",
       "#6e7d8f", "#62ad98", "#d3cc72", "#e9d4a9", "#dba6a1"]
@@ -34,7 +33,7 @@ Page({
   },
 
   formSubmit: function (e) {
-    getUserOpenId();
+
     var val = this.data.epigramVal;
     if (val == "") {
       wx.showToast({
@@ -84,7 +83,15 @@ Page({
    */
   onLoad: function (options) {
     that = this;
-    getUserOpenId();
+
+    console.log('获取 openId ' + app.globalData.openId);
+
+    wx.showToast({
+      title: app.globalData.openId,
+      image: '../image/warning.png',
+      duration: 3000
+    });
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -123,32 +130,3 @@ Page({
   }
 
 })
-
-function getUserOpenId() {
-  wx.login({
-    success: function (code) {
-      wx.request({
-        url: 'https://api.weixin.qq.com/sns/jscode2session',
-        data: {
-          appid: 'wxb4ddb059c36f48c3',
-          secret: 'cf6d03f9d3e77b43ec9d5f2c34e090ed',
-          js_code: code.code,
-          grant_type: 'authorization_code'
-        },
-        success: function (openIdResult) {
-          let openid = openIdResult.data.openid;
-          that.setData({
-            openId: openid
-          });
-          console.log('openId:' + openid);
-          // wx.setStorage({
-          //   key: "user_openid",
-          //   data: openIdResult.data.openid,
-          //   success: function () {
-          //   },
-          // });
-        }
-      })
-    }
-  });
-};
