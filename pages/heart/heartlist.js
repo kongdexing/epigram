@@ -32,7 +32,7 @@ Page({
     this.setData({
       limit: limit
     })
-    this.onShow();
+    getList();
 
     console.log("-----scroll to load ");
   },
@@ -45,12 +45,36 @@ Page({
   scrollV: function () { },
 
   onLoad: function () {
+    console.log('heartlist onLoad');
     that = this;
-    wx.startPullDownRefresh();
-    getList();
+    //先获取本地缓存,若有数据则加载本地数据，无数据时网络获取
+    wx.getStorage({
+      key: 'heartlist',
+      success: function (res) {
+        if (res.data.length > 0) {
+          that.setData({
+            epigramList: res.data
+          });
+        } else {
+          //网络获取数据
+          getList();
+        }
+        // console.log('onLoad getStorageInfo success  ' + res.data.length);
+      },
+      fail: function (res) {
+        // console.log('onLoad getStorageInfo fail');
+        //网络获取数据
+        getList();
+      },
+      complete: function (res) {
+        // console.log('onLoad getStorageInfo complete');
+      }
+    })
   },
+
   onShow: function () {
-    getList();
+    console.log('heartlist onShow');
+    // getList();
   },
 
   clickGood: function (e) {
@@ -125,18 +149,18 @@ Page({
   clickHug: function (e) {
     console.log("clickHug----<><>" + e.currentTarget.dataset.hug);
   },
-  createBtnClick:function(e){
+  createBtnClick: function (e) {
 
     console.log("createBtnClick");
     wx.navigateTo({
       url: '../push/push',
-      success:function(){
+      success: function () {
         console.log("success");
       },
-      fail:function(result){
-        console.log("fail"+result);
+      fail: function (result) {
+        console.log("fail" + result);
       },
-      complete:function(){
+      complete: function () {
         console.log("complete");
       }
     })
@@ -145,26 +169,31 @@ Page({
 })
 
 function getList() {
-  // var Epigram = Bmob.Object.extend("epigram");
-  // var query = new Bmob.Query(Epigram);
-  // // 查询所有数据
-  // query.limit(that.data.limit);
-  // query.descending("createdAt");
-  // query.find({
-  //   success: function (results) {
-  //     wx.stopPullDownRefresh();
-  //     // 循环处理查询到的数据
-  //     that.setData({
-  //       loadingHidden: true,
-  //       epigramList: results
-  //     })
-  //   },
-  //   error: function (error) {
-  //     wx.stopPullDownRefresh();
-  //     that.setData({
-  //       loadingHidden: true
-  //     })
-  //     console.log("查询失败: " + error.code + " " + error.message);
-  //   }
-  // });
+  var Epigram = Bmob.Object.extend("epigram");
+  var query = new Bmob.Query(Epigram);
+  // 查询所有数据
+  query.limit(that.data.limit);
+  query.descending("createdAt");
+  query.find({
+    success: function (results) {
+      wx.stopPullDownRefresh();
+      // 循环处理查询到的数据
+      that.setData({
+        loadingHidden: true,
+        epigramList: results
+      })
+
+      wx.setStorage({
+        key: 'heartlist',
+        data: results
+      })
+    },
+    error: function (error) {
+      wx.stopPullDownRefresh();
+      that.setData({
+        loadingHidden: true
+      })
+      console.log("查询失败: " + error.code + " " + error.message);
+    }
+  });
 }

@@ -42,8 +42,8 @@ App({
         }
       }
     })
-
   },
+
   globalData: {
     userInfo: null,
     openId:""
@@ -63,12 +63,12 @@ function getUserOpenId() {
   wx.login({
     success: function (res) {
 
-      wx.showToast({
-        title: res.code,
-        image: '../pages/image/warning.png',
-        duration: 3000
-      });
-      console.log("login success result code is "+res.code);    
+      // wx.showToast({
+      //   title: res.code,
+      //   image: '../pages/image/warning.png',
+      //   duration: 3000
+      // });
+      // console.log("login success result code is "+res.code);    
 
       wx.request({
         url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
@@ -76,15 +76,14 @@ function getUserOpenId() {
           js_code: res.code,
         },
         success: function (openIdResult) {
-          // let openid = openIdResult.data.openid;
-          // that.globalData.openId = openid;
-          // wx.showToast({
-          //   title: openid,
-          //   image: '../pages/image/warning.png',
-          //   duration: 1000
-          // });
-          console.log('app openId:' + openIdResult.data.info);
-          console.log('app openId:' + openIdResult.data.info.openid);
+          let openid = openIdResult.data.data.openid;
+          that.globalData.openId = openid;
+          wx.showToast({
+            title: openid,
+            image: '../pages/image/warning.png',
+            duration: 1000
+          });
+          console.log('----app openId:' + openIdResult.data.data.openid);
         },
         fail:function(result){
           wx.showToast({
