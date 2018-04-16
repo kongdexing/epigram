@@ -56,7 +56,7 @@ Page({
   scrollV: function () { },
 
   onShow: function () {
-    getList();
+    // getList();
   },
 
   onLoad: function () {
@@ -75,6 +75,7 @@ Page({
       this.setData({ stv: this.data.stv })
       this.tabsCount = tabs.length;
     } catch (e) {
+      
     }
 
     if (app.globalData.userInfo) {
@@ -105,7 +106,6 @@ Page({
     }
 
     that = this;
-    wx.startPullDownRefresh();
     getList();
 
   },

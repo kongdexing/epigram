@@ -78,12 +78,7 @@ function getUserOpenId() {
         success: function (openIdResult) {
           let openid = openIdResult.data.data.openid;
           that.globalData.openId = openid;
-          wx.showToast({
-            title: openid,
-            image: '../pages/image/warning.png',
-            duration: 1000
-          });
-          console.log('----app openId:' + openIdResult.data.data.openid);
+          console.log('----app openId:' + that.globalData.openId);
         },
         fail:function(result){
           wx.showToast({

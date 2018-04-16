@@ -146,11 +146,11 @@ Page({
     });
 
   },
+
   clickHug: function (e) {
     console.log("clickHug----<><>" + e.currentTarget.dataset.hug);
   },
   createBtnClick: function (e) {
-
     console.log("createBtnClick");
     wx.navigateTo({
       url: '../push/push',

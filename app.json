@@ -2,7 +2,8 @@
   "pages":[
     "pages/heart/heartlist",
     "pages/mine/me",
-    "pages/push/push"
+    "pages/push/push",
+    "pages/detail/detail"
   ],
   "window":{
     "backgroundTextStyle":"light",
