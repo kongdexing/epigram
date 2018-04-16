@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var Bmob = require('../../utils/bmob.js');
-const app = getApp()
+var app = getApp();
 var that;
 
 Page({
@@ -32,7 +32,7 @@ Page({
   //下拉刷新
   onPullDownRefresh: function () {
     console.log("onPullDownRefresh");
-    getList();
+    // getList();
   },
   onReachBottom: function () {
     this.setData({
@@ -60,6 +60,8 @@ Page({
   },
 
   onLoad: function () {
+    that = this;
+
     wx.showToast({
       title: app.globalData.openId,
       image: '../image/warning.png',
@@ -105,7 +107,6 @@ Page({
       })
     }
 
-    that = this;
     getList();
 
   },
@@ -195,13 +196,16 @@ function getList() {
   var wxId = app.globalData.openId;
   console.log('11 wxId:' + wxId);
   if(wxId==""){
-    wx.showToast({
-      title: "未获取用户ID",
-      image: '../image/warning.png',
-      duration: 1000
-    });
-    return;
+    
   }
+
+  wx.showToast({
+    title: "getList "+wxId,
+    image: '../image/warning.png',
+    duration: 1000
+  });
+
+  return;
 
   var Epigram = Bmob.Object.extend("epigram");
   var query = new Bmob.Query(Epigram);

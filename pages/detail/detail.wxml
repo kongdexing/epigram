@@ -21,9 +21,9 @@
           <view class="comments dot">
             <a>{{epigram.hug}} 踩 </a>
           </view>
-          <!--<view class="follow-it">
-                            <a>关注问题</a>
-                        </view>-->
+          <view class="follow-it">
+             <a>分享</a>
+          </view>
         </view>
       </view>
     </view>
