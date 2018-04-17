@@ -22,34 +22,76 @@ App({
         getUserOpenId();
       }
     })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
 
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
+    getAuthorize();
+
   },
 
   globalData: {
     userInfo: null,
-    openId:""
+    openId: ""
   }
 
 })
+
+function getAuthorize() {
+  //获取用户授权
+  wx.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.authorize({
+          scope: 'scope.userInfo',
+          success() {
+            console.log('scope userInfo success');
+            //获取用户信息
+            getUserWXInfo();
+          },
+          fail(res) {
+            openWxSetting();
+            // wx.showToast({
+            //   title: "用户授权失败",
+            //   image: '/pages/image/warning.png',
+            //   duration: 1000
+            // });
+            console.log('scope userInfo fail ' + res);
+          }
+        })
+      } else {
+        getUserWXInfo();
+      }
+    }
+  })
+}
+
+function openWxSetting() {
+  wx.openSetting({
+    success(settingdata) {
+      if (!settingdata.authSetting['scope.userInfo']) {
+        //未获得授权
+        openWxSetting();
+      } else {
+        getUserWXInfo();
+      }
+      console.log('打开 setting ' + settingdata);
+    }
+  })
+}
+
+function getUserWXInfo() {
+  // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+  wx.getUserInfo({
+    success: res => {
+      // 可以将 res 发送给后台解码出 unionId
+      that.globalData.userInfo = res.userInfo
+
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      if (that.userInfoReadyCallback) {
+        that.userInfoReadyCallback(res)
+      }
+    }
+  })
+}
 
 function getUserOpenId() {
   // wx.showToast({
@@ -59,17 +101,9 @@ function getUserOpenId() {
   // });
 
   console.log("App getUserOpenId");
-  
+
   wx.login({
     success: function (res) {
-
-      // wx.showToast({
-      //   title: res.code,
-      //   image: '../pages/image/warning.png',
-      //   duration: 3000
-      // });
-      // console.log("login success result code is "+res.code);    
-
       wx.request({
         url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
         data: {
@@ -80,13 +114,13 @@ function getUserOpenId() {
           that.globalData.openId = openid;
           console.log('----app openId:' + that.globalData.openId);
         },
-        fail:function(result){
+        fail: function (result) {
           wx.showToast({
             title: result,
             image: '../pages/image/warning.png',
             duration: 1000
           });
-          console.log('get user openId fail '+result);
+          console.log('get user openId fail ' + result);
         }
       })
     }

@@ -15,6 +15,7 @@ Page({
     },
     activeTab: 0,
     userInfo: {},
+    openId:'',
     epigramList: [],
     hasUserInfo: false,
     loadingHidden: true,
@@ -31,8 +32,7 @@ Page({
 
   //下拉刷新
   onPullDownRefresh: function () {
-    console.log("onPullDownRefresh");
-    // getList();
+    getUserOpenId();
   },
   onReachBottom: function () {
     this.setData({
@@ -44,8 +44,6 @@ Page({
       limit: limit
     })
     this.onShow();
-
-    console.log("-----scroll to load ");
   },
   refresh: function () {
 
@@ -56,17 +54,11 @@ Page({
   scrollV: function () { },
 
   onShow: function () {
-    // getList();
+    getUserOpenId();
   },
 
   onLoad: function () {
     that = this;
-
-    wx.showToast({
-      title: app.globalData.openId,
-      image: '../image/warning.png',
-      duration: 3000
-    });
 
     try {
       let { tabs } = this.data;
@@ -107,7 +99,7 @@ Page({
       })
     }
 
-    getList();
+    getUserOpenId();
 
   },
   getUserInfo: function(e) {
@@ -192,20 +184,51 @@ Page({
   }
 })
 
+function getUserOpenId() {
+  console.log('pager me getUserOpenId');
+  wx.login({
+    success: function (res) {
+      
+      wx.request({
+        url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
+        data: {
+          js_code: res.code,
+        },
+        success: function (openIdResult) {
+          let openid = openIdResult.data.data.openid;
+          wx.showToast({
+            title: 'openId ' + openid,
+            image: '../image/warning.png',
+            duration: 1000
+          });
+
+          that.setData({
+            openId:openid
+          })
+          // getList();
+        },
+        fail: function (result) {
+          wx.showToast({
+            title: result,
+            image: '../image/warning.png',
+            duration: 1000
+          });
+          console.log('get user openId fail ' + result);
+        }
+      })
+    }
+  });
+};
+
 function getList() {
-  var wxId = app.globalData.openId;
+  var wxId = that.data.openId;
   console.log('11 wxId:' + wxId);
-  if(wxId==""){
-    
-  }
 
   wx.showToast({
-    title: "getList "+wxId,
+    title: "getList " + wxId,
     image: '../image/warning.png',
     duration: 1000
   });
-
-  return;
 
   var Epigram = Bmob.Object.extend("epigram");
   var query = new Bmob.Query(Epigram);

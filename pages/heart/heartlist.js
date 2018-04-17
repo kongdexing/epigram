@@ -20,7 +20,6 @@ Page({
 
   //下拉刷新
   onPullDownRefresh: function () {
-    console.log("onPullDownRefresh");
     getList();
   },
   onReachBottom: function () {
@@ -33,8 +32,6 @@ Page({
       limit: limit
     })
     getList();
-
-    console.log("-----scroll to load ");
   },
   refresh: function () {
 
@@ -45,7 +42,6 @@ Page({
   scrollV: function () { },
 
   onLoad: function () {
-    console.log('heartlist onLoad');
     that = this;
     //先获取本地缓存,若有数据则加载本地数据，无数据时网络获取
     wx.getStorage({
@@ -73,7 +69,6 @@ Page({
   },
 
   onShow: function () {
-    console.log('heartlist onShow');
     // getList();
   },
 
@@ -82,7 +77,6 @@ Page({
     var id = e.currentTarget.dataset.id;
 
     let epigrams = that.data.epigramList;
-    console.log("epigrams size is " + epigrams.length);
 
     // epigrams.forEach(function (item, index) {
     //   if (item.objectId == id) {
@@ -151,7 +145,6 @@ Page({
     console.log("clickHug----<><>" + e.currentTarget.dataset.hug);
   },
   createBtnClick: function (e) {
-    console.log("createBtnClick");
     wx.navigateTo({
       url: '../push/push',
       success: function () {
