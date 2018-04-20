@@ -7,7 +7,7 @@ App({
     that = this;
 
     const Bmob = require('utils/bmob.js');
-    Bmob.initialize("dce0be3d571021a9eac5f0a321a79881", "62a2cb5b8baf5b9bc43d8c43bd9a803c");
+    Bmob.initialize("6b2111d17af9985c268184df8237e2e3", "a1ef803ed08300b8284019c7a567f7d3");
 
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
@@ -17,9 +17,16 @@ App({
     // 登录
     wx.login({
       success: res => {
+        console.log('login result code is '+res.code);
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('app wx login success');
-        getUserOpenId();
+        Bmob.Cloud.run('getOpenId',{"code":res.code},{
+          success:function(result){
+            console.log(result);
+          },
+          error:function(error){
+            console.log('error:'+error);
+          }
+        });
       }
     })
 
@@ -48,11 +55,6 @@ function getAuthorize() {
           },
           fail(res) {
             openWxSetting();
-            // wx.showToast({
-            //   title: "用户授权失败",
-            //   image: '/pages/image/warning.png',
-            //   duration: 1000
-            // });
             console.log('scope userInfo fail ' + res);
           }
         })
@@ -67,7 +69,7 @@ function openWxSetting() {
   wx.openSetting({
     success(settingdata) {
       if (!settingdata.authSetting['scope.userInfo']) {
-        //未获得授权
+        //未获得授权，跳转至设置页面
         openWxSetting();
       } else {
         getUserWXInfo();
@@ -102,27 +104,9 @@ function getUserOpenId() {
 
   console.log("App getUserOpenId");
 
-  wx.login({
-    success: function (res) {
-      wx.request({
-        url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
-        data: {
-          js_code: res.code,
-        },
-        success: function (openIdResult) {
-          let openid = openIdResult.data.data.openid;
-          that.globalData.openId = openid;
-          console.log('----app openId:' + that.globalData.openId);
-        },
-        fail: function (result) {
-          wx.showToast({
-            title: result,
-            image: '../pages/image/warning.png',
-            duration: 1000
-          });
-          console.log('get user openId fail ' + result);
-        }
-      })
-    }
-  });
+  // wx.login({
+  //   success: function (res) {
+      
+  //   }
+  // });
 };
