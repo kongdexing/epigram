@@ -20,8 +20,15 @@ App({
         console.log('login result code is '+res.code);
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         Bmob.Cloud.run('getOpenId',{"code":res.code},{
-          success:function(result){
-            console.log(result);
+          success: function (res){
+            var jsonStr = res;
+            jsonStr = jsonStr.replace(" ", "");
+            if (typeof jsonStr != 'object') {
+              jsonStr = jsonStr.replace(/\ufeff/g, "");//重点
+              var jj = JSON.parse(jsonStr);
+              console.log('bmob cloud api getOpenId:' + jj.openid);
+              that.globalData.openId = jj.openid;
+            }
           },
           error:function(error){
             console.log('error:'+error);
@@ -94,19 +101,3 @@ function getUserWXInfo() {
     }
   })
 }
-
-function getUserOpenId() {
-  // wx.showToast({
-  //   title: "getUserOpenId",
-  //   image: '../pages/image/success.png',
-  //   duration: 1000
-  // });
-
-  console.log("App getUserOpenId");
-
-  // wx.login({
-  //   success: function (res) {
-      
-  //   }
-  // });
-};

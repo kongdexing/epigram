@@ -15,7 +15,6 @@ Page({
     },
     activeTab: 0,
     userInfo: {},
-    openId:'',
     epigramList: [],
     hasUserInfo: false,
     loadingHidden: true,
@@ -54,7 +53,7 @@ Page({
   scrollV: function () { },
 
   onShow: function () {
-    getUserOpenId();
+    getList();
   },
 
   onLoad: function () {
@@ -98,9 +97,6 @@ Page({
         }
       })
     }
-
-    getUserOpenId();
-
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -184,51 +180,11 @@ Page({
   }
 })
 
-function getUserOpenId() {
-  console.log('pager me getUserOpenId');
-  wx.login({
-    success: function (res) {
-      
-      wx.request({
-        url: 'http://school.xinpingtai.com/index.php/Api/WXopenId/getWXopenId',
-        data: {
-          js_code: res.code,
-        },
-        success: function (openIdResult) {
-          let openid = openIdResult.data.data.openid;
-          wx.showToast({
-            title: 'openId ' + openid,
-            image: '../image/warning.png',
-            duration: 1000
-          });
-
-          that.setData({
-            openId:openid
-          })
-          // getList();
-        },
-        fail: function (result) {
-          wx.showToast({
-            title: result,
-            image: '../image/warning.png',
-            duration: 1000
-          });
-          console.log('get user openId fail ' + result);
-        }
-      })
-    }
-  });
-};
-
 function getList() {
-  var wxId = that.data.openId;
-  console.log('11 wxId:' + wxId);
-
-  wx.showToast({
-    title: "getList " + wxId,
-    image: '../image/warning.png',
-    duration: 1000
-  });
+  var wxId = app.globalData.openId;
+  // wx.showToast({
+  //   title: 'wId:'+wxId,
+  // })
 
   var Epigram = Bmob.Object.extend("epigram");
   var query = new Bmob.Query(Epigram);
