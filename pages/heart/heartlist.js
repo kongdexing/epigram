@@ -2,6 +2,7 @@
 //const util = require('../../utils/util.js')
 var Bmob = require('../../utils/bmob.js');
 var app = getApp();
+const util = app.util;
 const appParam = app.appParam;
 var that;
 
@@ -15,7 +16,9 @@ Page({
     limit: 10,
     logevent: "world",
     userInfo: {},
-    hasUserInfo: false
+    hasUserInfo: false,
+    touch_start: 0,
+    touch_end: 0
   },
 
   //下拉刷新
@@ -157,6 +160,44 @@ Page({
         console.log("complete");
       }
     })
+  },
+
+
+  mytouchstart: function (e) {
+    that.setData({
+      touch_start: e.timeStamp
+    })
+  },
+  mytouchend: function (e) {
+    that.setData({
+      touch_end: e.timeStamp
+    })
+  },
+  toDetail: function (e) {
+    var touchTime = that.data.touch_end - that.data.touch_start;
+    console.log('touch time ' + touchTime);
+    if (touchTime < 350) {
+      console.log(' click ');
+
+    }
+  },
+  longTap:function(e){
+    var content = e.target.id ? e.target.id : e.currentTarget.id;
+    console.log('long tap ' + content);
+    wx.showActionSheet({
+      itemList: ['复制','收藏','点赞'],
+      success: function (res) {
+        if (res.tapIndex == 0) {
+          util.setClip(content + "----来自微信小程序【悄悄说心事】");
+        } else if (res.tapIndex == 1) {
+          
+        }
+      },
+      fail: function (res) { }
+    });
+  },
+  clickTap:function(e){
+    console.log('click tap');
   }
 
 })

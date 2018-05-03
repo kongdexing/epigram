@@ -1,5 +1,6 @@
 //app.js
 var that;
+const util = require('utils/util.js');
 
 App({
   onLaunch: function () {
@@ -41,6 +42,8 @@ App({
 
   },
 
+  util: util,
+  
   globalData: {
     userInfo: null,
     openId: ""

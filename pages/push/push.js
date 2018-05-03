@@ -46,7 +46,7 @@ Page({
     }
     var Epigram = Bmob.Object.extend("epigram");
     var epigram = new Epigram();
-    epigram.set("userId", this.data.openId);
+    epigram.set("userId", app.globalData.openId);
     epigram.set("say", val);
     epigram.set("nickName", this.data.userInfo.nickName);
     epigram.set("avatarUrl", this.data.userInfo.avatarUrl);
