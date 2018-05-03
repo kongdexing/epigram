@@ -182,15 +182,22 @@ Page({
     }
   },
   longTap:function(e){
-    var content = e.target.id ? e.target.id : e.currentTarget.id;
-    console.log('long tap ' + content);
+    var objectId = e.target.id ? e.target.id : e.currentTarget.id;
+    console.log('long tap ' + objectId);
     wx.showActionSheet({
       itemList: ['复制','收藏','点赞'],
       success: function (res) {
         if (res.tapIndex == 0) {
+          var content = e.currentTarget.dataset.say;
           util.setClip(content + "----来自微信小程序【悄悄说心事】");
         } else if (res.tapIndex == 1) {
-          
+          //收藏
+          console.log('collect openId ' + app.globalData.openId);
+
+
+        } else if (res.tapIndex == 2) {
+          //点赞
+
         }
       },
       fail: function (res) { }

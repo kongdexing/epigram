@@ -3,7 +3,7 @@
     <block wx:for="{{epigramList}}">
       <!-- <navigator url='../detail/detail?id={{item.objectId}}'> -->
         <view class="feed-item" style='background:{{item.color}}' 
-        id='{{item.say}}'
+        id='{{item.objectId}}' data-say='{{item.say}}'
         bindtouchstart='mytouchstart' bindtouchend='mytouchend' 
         catchtap='toDetail' bindlongtap='longTap' bindtap='clickTap'>
           <view class="feed-source">
@@ -20,11 +20,11 @@
               <view bindtap="bindItemTap">
                 <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
               </view>
-              <view class="answer-actions" style='display: none' bindtap="bindItemTap">
+              <view class="answer-actions" bindtap="bindItemTap">
                 <view class="like dot">
                   <a>{{item.good}} 顶</a>
                 </view>
-                <view class="comments dot">
+                <view class="comments dot" style='display:none'>
                   <a>{{item.hug}} 踩 </a>
                 </view>
                 <!--<view class="follow-it">
