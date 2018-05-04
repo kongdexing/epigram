@@ -181,33 +181,114 @@ Page({
 
     }
   },
-  longTap:function(e){
+  longTap: function (e) {
     var objectId = e.target.id ? e.target.id : e.currentTarget.id;
-    console.log('long tap ' + objectId);
-    wx.showActionSheet({
-      itemList: ['复制','收藏','点赞'],
-      success: function (res) {
-        if (res.tapIndex == 0) {
-          var content = e.currentTarget.dataset.say;
-          util.setClip(content + "----来自微信小程序【悄悄说心事】");
-        } else if (res.tapIndex == 1) {
-          //收藏
-          console.log('collect openId ' + app.globalData.openId);
+    var say = e.currentTarget.dataset.say;
 
+    var popItem = ['复制', '收藏', '点赞'];
 
-        } else if (res.tapIndex == 2) {
-          //点赞
-
+    //判断是否收藏
+    var Collect = Bmob.Object.extend("collect");
+    var query = new Bmob.Query(Collect);
+    query.equalTo("openId", app.globalData.openId);
+    query.equalTo("epigramId", objectId);
+    query.find({
+      success: function (results) {
+        console.log('query collect result ' + results.length);
+        var collectId = '';
+        if (results.length > 0) {
+          popItem = ['复制', '取消收藏', '点赞'];
+          collectId = results[0].id;
+          showPopList(popItem, say, objectId, false, collectId);
+        } else {
+          showPopList(popItem, say, objectId, true, collectId);
         }
       },
-      fail: function (res) { }
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+        showPopList(popItem, say, objectId, true, "");
+      }
     });
   },
-  clickTap:function(e){
+  clickTap: function (e) {
     console.log('click tap');
   }
 
 })
+
+function showPopList(popItem, content, objectId, isCollect, collectId) {
+  wx.showActionSheet({
+    itemList: popItem,
+
+    success: function (res) {
+      if (res.tapIndex == 0) {
+        util.setClip(content + "----来自微信小程序【悄悄说心事】");
+      } else if (res.tapIndex == 1) {
+        //收藏|取消收藏
+        if (isCollect) {
+          collectEpig(objectId);
+        } else {
+          unCollectEpig(collectId);
+        }
+      } else if (res.tapIndex == 2) {
+        //点赞
+
+      }
+    },
+    fail: function (res) { }
+  });
+}
+
+function collectEpig(objectId) {
+  var Collect = Bmob.Object.extend("collect");
+  var collect = new Collect();
+  collect.set("openId", app.globalData.openId);
+  collect.set("epigramId", objectId);
+  //添加数据，第一个入口参数是null
+  collect.save(null, {
+    success: function (result) {
+      wx.showToast({
+        title: '收藏成功！',
+        image: '../image/success.png',
+        duration: 1000
+      });
+    },
+    error: function (result, error) {
+      // 添加失败
+      wx.showToast({
+        title: '收藏失败！',
+        image: '../image/warning.png',
+        duration: 1000
+      });
+      console.log('创建日记失败' + error);
+    }
+  });
+
+}
+
+function unCollectEpig(collectId) {
+  var Collect = Bmob.Object.extend("collect");
+  var query = new Bmob.Query(Collect);
+  query.get(collectId, {
+    success: function (object) {
+      object.destroy({
+        success: function (deleteObject) {
+          wx.showToast({
+            title: '取消收藏成功！',
+            image: '../image/success.png',
+            duration: 1000
+          });
+        },
+        error: function (object, error) {
+          console.log('delete error ' + object + ' ' + error);
+        }
+      });
+    },
+    error: function (object, error) {
+      console.log("query object fail");
+    }
+  });
+}
 
 function getList() {
   var Epigram = Bmob.Object.extend("epigram");

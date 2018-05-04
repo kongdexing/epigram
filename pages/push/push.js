@@ -86,11 +86,11 @@ Page({
 
     console.log('获取 openId ' + app.globalData.openId);
 
-    wx.showToast({
-      title: app.globalData.openId,
-      image: '../image/warning.png',
-      duration: 3000
-    });
+    // wx.showToast({
+    //   title: app.globalData.openId,
+    //   image: '../image/warning.png',
+    //   duration: 3000
+    // });
 
     if (app.globalData.userInfo) {
       this.setData({
