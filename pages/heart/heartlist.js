@@ -175,10 +175,12 @@ Page({
   },
   toDetail: function (e) {
     var touchTime = that.data.touch_end - that.data.touch_start;
-    console.log('touch time ' + touchTime);
     if (touchTime < 350) {
-      console.log(' click ');
-
+      var objectId = e.target.id ? e.target.id : e.currentTarget.id;
+      console.log('click tap ');
+      wx.navigateTo({
+        url: '../detail/detail?id=' + objectId,
+      })
     }
   },
   longTap: function (e) {
@@ -210,9 +212,6 @@ Page({
       }
     });
   },
-  clickTap: function (e) {
-    console.log('click tap');
-  }
 
 })
 

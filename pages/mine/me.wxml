@@ -15,7 +15,7 @@
   <view class="scroll-view">
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
       <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique">
-        <scroll-view scroll-y="true" class="container" lower-threshold="5" bindscrolltolower="lower">
+        <scroll-view scroll-y="true" class="container" bindscrolltolower="lower">
           <block wx:for="{{epigramList}}">
             <view class="feed-item" style='background:{{item.color}}'>
               <view class="feed-source">
