@@ -16,6 +16,7 @@ Page({
     activeTab: 0,
     userInfo: {},
     epigramList: [],
+    collectList:[],
     hasUserInfo: false,
     loadingHidden: true,
     scrollLog: '0',
@@ -196,8 +197,10 @@ Page({
 })
 
 function getList() {
-  if (activeTab == 0) {
-    var wxId = app.globalData.openId;
+  var wxId = app.globalData.openId;
+  console.log('getList active '+that.data.activeTab);
+
+  if (that.data.activeTab == 0) {
     var Epigram = Bmob.Object.extend("epigram");
     var query = new Bmob.Query(Epigram);
     // 查询个人发布数据
@@ -222,7 +225,15 @@ function getList() {
       }
     });
   } else {
-    
+    var Collect = Bmob.Object.extend("collect");
+    var query = new Bmob.Query(Collect);
+    query.equalTo("openId",wxId);
+    query.find({
+      success:function(results){
+
+      }
+    });
+
   }
 
 }
