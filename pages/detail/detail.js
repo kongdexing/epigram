@@ -1,4 +1,5 @@
 var that;
+var Bmob = require('../../utils/bmob.js');
 
 Page({
 
@@ -48,9 +49,51 @@ Page({
 
   },
 
+  onGoodClick:function(e){
+    console.log('onGoodClick');
+    //点赞
+    var Epigram = Bmob.Object.extend("epigram");
+    var queryE = new Bmob.Query(Epigram);
+    queryE.get(this.data.objectId,{
+      success:function(result){
+        var good = result.attributes.good;
+
+        if (good == undefined) {
+          good = 1;
+        } else {
+          good += 1;
+        }
+
+        result.set('good', good);
+        result.save();
+
+        var _epigram = that.data.epigram;
+        _epigram.good = good;
+        that.setData({
+          epigram: _epigram
+        })
+
+      }
+    });
+
+  },
+
+  onShareClick: function (e) {
+    console.log('onShareClick');
+  },
+
 })
 
 function getEpigram() {
-
+  var Epigram = Bmob.Object.extend("epigram");
+  var queryE = new Bmob.Query(Epigram);
+  queryE.equalTo("objectId", that.data.objectId);
+  queryE.find({
+    success: function (results) {
+      that.setData({
+        epigram: results[0]
+      })
+    }
+  });
 
 }

@@ -13,7 +13,7 @@ Page({
     userInfo: {},
     broadColor: "#6e7d8f",
     broadCols: ["#3c3d3c", "#f5d575", "#f69595", "#c5a6c1", "#71aaa9", "#90cbe3",
-      "#6e7d8f", "#62ad98", "#d3cc72", "#e9d4a9", "#dba6a1"]
+      "#6e7d8f", "#62ad98", "#d3cc72", "#dba6a1"]
   },
 
   changeTextColor: function (event) {

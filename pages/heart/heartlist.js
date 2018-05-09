@@ -18,7 +18,8 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     touch_start: 0,
-    touch_end: 0
+    touch_end: 0,
+    reloadData: false
   },
 
   //下拉刷新
@@ -73,8 +74,18 @@ Page({
 
   onShow: function () {
     // getList();
+    if (this.data.reloadData) {
+      getList();
+      this.setData({
+        reloadData: false
+      });
+    }
   },
-
+  onHide: function () {
+    this.setData({
+      reloadData: true
+    });
+  },
   clickGood: function (e) {
     let good = e.currentTarget.dataset.good;  //点赞次数
     var id = e.currentTarget.dataset.id;
@@ -118,12 +129,6 @@ Page({
       return arr;
     });
 
-    if (good == undefined) {
-      good = 1;
-    } else {
-      good += 1;
-    }
-
     var Epigram = Bmob.Object.extend("epigram");
     var epigram = new Epigram();
     //这个 id 是要修改条目的 objectId，你在
@@ -162,7 +167,6 @@ Page({
     })
   },
 
-
   mytouchstart: function (e) {
     that.setData({
       touch_start: e.timeStamp
@@ -187,7 +191,7 @@ Page({
     var objectId = e.target.id ? e.target.id : e.currentTarget.id;
     var say = e.currentTarget.dataset.say;
 
-    var popItem = ['复制', '收藏', '点赞'];
+    var popItem = ['复制', '收藏'];
 
     //判断是否收藏
     var Collect = Bmob.Object.extend("collect");
@@ -199,7 +203,7 @@ Page({
         console.log('query collect result ' + results.length);
         var collectId = '';
         if (results.length > 0) {
-          popItem = ['复制', '取消收藏', '点赞'];
+          popItem = ['复制', '取消收藏'];
           collectId = results[0].id;
           showPopList(popItem, say, objectId, false, collectId);
         } else {

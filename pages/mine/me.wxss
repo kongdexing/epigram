@@ -62,7 +62,6 @@
 .userinfo {
   display: flex;
   flex-direction:row;
-  background-color:bisque;
   align-items: left;
 }
 

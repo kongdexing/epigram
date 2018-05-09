@@ -21,11 +21,8 @@
                 <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
               </view>
               <view class="answer-actions" bindtap="bindItemTap">
-                <view class="like dot">
-                  <a>{{item.good}} 顶</a>
-                </view>
-                <view class="comments dot" style='display:none'>
-                  <a>{{item.hug}} 踩 </a>
+                <view class="like">
+                  <a>{{item.good}} 👍</a>
                 </view>
                 <!--<view class="follow-it">
                             <a>关注问题</a>

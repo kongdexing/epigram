@@ -16,11 +16,12 @@ Page({
     activeTab: 0,
     userInfo: {},
     epigramList: [],
-    collectList:[],
+    collectList: [],
     hasUserInfo: false,
     loadingHidden: true,
     scrollLog: '0',
     limit: 10,
+    collectLimit:10,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -30,11 +31,8 @@ Page({
     that.setData({
       hasRefesh: true,
     });
-    wx.showToast({
-      title: '刷新中！',
-      image: '../image/success.png',
-      duration: 1000
-    });
+
+    getList();
 
   },
   onReachBottom: function () {
@@ -42,10 +40,17 @@ Page({
       loadingHidden: false
     })
 
-    var limit = that.data.limit + 10
-    this.setData({
-      limit: limit
-    })
+    if (this.data.activeTab == 0) {
+      var limit = that.data.limit + 10
+      this.setData({
+        limit: limit
+      })
+    } else if (this.data.activeTab == 1){
+      var limit = that.data.collectLimit + 10
+      this.setData({
+        collectLimit: limit
+      })
+    }
     this.onShow();
   },
   // upper:function(e){
@@ -184,12 +189,14 @@ Page({
   _updateSelectedPage(page) {
     console.log('_updateSelectedPage page ' + page);
 
-    let { tabs, stv, activeTab } = this.data;
-    activeTab = page;
-    this.setData({ activeTab: activeTab });
-    stv.offset = stv.windowWidth * activeTab;
-    this.setData({ stv: this.data.stv });
-
+    if (this.data.activeTab != page) {
+      let { tabs, stv, activeTab } = this.data;
+      activeTab = page;
+      this.setData({ activeTab: activeTab });
+      stv.offset = stv.windowWidth * activeTab;
+      this.setData({ stv: this.data.stv });
+      getList();
+    }
   },
   handlerTabTap(e) {
     this._updateSelectedPage(e.currentTarget.dataset.index);
@@ -198,7 +205,7 @@ Page({
 
 function getList() {
   var wxId = app.globalData.openId;
-  console.log('getList active '+that.data.activeTab);
+  console.log('getList active ' + that.data.activeTab);
 
   if (that.data.activeTab == 0) {
     var Epigram = Bmob.Object.extend("epigram");
@@ -227,10 +234,33 @@ function getList() {
   } else {
     var Collect = Bmob.Object.extend("collect");
     var query = new Bmob.Query(Collect);
-    query.equalTo("openId",wxId);
+    query.equalTo("openId", wxId);
+    query.limit(that.data.collectLimit);
+    query.descending("createdAt");
+    // var eQuery = new Bmob.Query(Bmob.epigram);
     query.find({
-      success:function(results){
+      success: function (results) {
+        var cols = [];
+        for(var col in results){
+          cols.push(results[col].attributes.epigramId);
+        }
 
+        var Epigram = Bmob.Object.extend("epigram");
+        var queryE = new Bmob.Query(Epigram);
+        queryE.containedIn("objectId",cols);
+        queryE.find({
+          success:function(results){
+            that.setData({
+              loadingHidden: true,
+              collectList: results
+            })
+          }
+        });
+
+        console.log('' + cols);
+      },
+      error: function (error) {
+        console.log('select collect error ' + error);
       }
     });
 

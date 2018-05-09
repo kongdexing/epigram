@@ -15,14 +15,11 @@
           <text class="answer-txt" aid="{{answer_id}}">{{epigram.say}}</text>
         </view>
         <view class="answer-actions" bindtap="bindItemTap">
-          <view class="like dot">
-            <a>{{epigram.good}} 顶</a>
+          <view class="like" bindtap='onGoodClick'>
+            <a>{{epigram.good}} 👍</a>
           </view>
-          <view class="comments dot">
-            <a>{{epigram.hug}} 踩 </a>
-          </view>
-          <view class="follow-it">
-             <a>分享</a>
+          <view class="follow-it" bindtap='onShareClick'>
+             分享
           </view>
         </view>
       </view>

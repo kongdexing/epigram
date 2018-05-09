@@ -1,0 +1,9 @@
+.follow-it{
+  float: right;
+  size: 32pt;
+}
+
+.like{
+  width: 20%;
+  height: 20%;
+}
