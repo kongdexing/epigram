@@ -1,5 +1,7 @@
 var that;
 var Bmob = require('../../utils/bmob.js');
+var app = getApp();
+const util = app.util;
 
 Page({
 
@@ -78,8 +80,19 @@ Page({
 
   },
 
+  onShareAppMessage:function(){
+    return {
+      // title: '悄悄说心事',
+      // desc: '来自悄悄说的经典语句',
+      path: '/pages/detail/detail?id='+this.data.epigram.objectId
+    }
+  },
+
   onShareClick: function (e) {
     console.log('onShareClick');
+    //复制
+    util.setClip(this.data.epigram.say + "----来自微信小程序【悄悄说心事】");
+
   },
 
 })

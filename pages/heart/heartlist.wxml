@@ -18,7 +18,7 @@
           <view class="feed-content">
             <view class="answer-body">
               <view bindtap="bindItemTap">
-                <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
+                <text class="answer-txt-list" aid="{{answer_id}}">{{item.say}}</text>
               </view>
               <view class="answer-actions" bindtap="bindItemTap">
                 <view class="like">

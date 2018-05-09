@@ -10,6 +10,7 @@ Page({
     stv: {
       windowWidth: 0,
       lineWidth: 0,
+      scrollHeight:0,
       offset: 0,
       tStart: false
     },
@@ -35,24 +36,7 @@ Page({
     getList();
 
   },
-  onReachBottom: function () {
-    this.setData({
-      loadingHidden: false
-    })
 
-    if (this.data.activeTab == 0) {
-      var limit = that.data.limit + 10
-      this.setData({
-        limit: limit
-      })
-    } else if (this.data.activeTab == 1){
-      var limit = that.data.collectLimit + 10
-      this.setData({
-        collectLimit: limit
-      })
-    }
-    this.onShow();
-  },
   // upper:function(e){
   //   console.log('upper');
   //   var that = this;
@@ -61,9 +45,27 @@ Page({
   //   });
 
   // },
-  // lower: function () {
-  //   console.log('lower');
-  // },
+  lower: function () {
+    console.log('lower');
+    // this.setData({
+    //   loadingHidden: false
+    // })
+
+    // if (this.data.activeTab == 0) {
+    //   var limit = that.data.limit + 10
+    //   this.setData({
+    //     limit: limit
+    //   })
+    //   console.log('limit:'+limit);
+    // } else if (this.data.activeTab == 1) {
+    //   var limit = that.data.collectLimit + 10
+    //   this.setData({
+    //     collectLimit: limit
+    //   })
+    //   console.log('limit:' + limit);
+    // }
+    // this.onShow();
+  },
 
   pullUpLoad: function () {
 
@@ -83,7 +85,13 @@ Page({
       this.windowWidth = res.windowWidth;
       this.data.stv.lineWidth = this.windowWidth / this.data.tabs.length;
       this.data.stv.windowWidth = res.windowWidth;
+
+      this.data.stv.scrollHeight = res.windowHeight-100;
+      
       this.setData({ stv: this.data.stv })
+
+      console.log('stv.scrollHeight ' + this.data.stv.scrollHeight);
+
       this.tabsCount = tabs.length;
     } catch (e) {
 
@@ -200,6 +208,13 @@ Page({
   },
   handlerTabTap(e) {
     this._updateSelectedPage(e.currentTarget.dataset.index);
+  },
+  itemClick:function(e){
+    var objectId = e.target.id ? e.target.id : e.currentTarget.id;
+    console.log('click tap ' + objectId);
+    wx.navigateTo({
+      url: '../detail/detail?id=' + objectId,
+    })
   }
 })
 

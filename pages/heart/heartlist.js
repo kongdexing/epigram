@@ -86,6 +86,13 @@ Page({
       reloadData: true
     });
   },
+  onShareAppMessage: function () {
+    return {
+      // title: '悄悄说心事',
+      // desc: '来自悄悄说的经典语句',
+      path: '/pages/heart/heartlist'
+    }
+  },
   clickGood: function (e) {
     let good = e.currentTarget.dataset.good;  //点赞次数
     var id = e.currentTarget.dataset.id;

@@ -1,5 +1,6 @@
 .push-area{
   width: 95%;
+  height: 500rpx;
   margin: 5px;
   padding:10rpx;
   border-radius: 4px;

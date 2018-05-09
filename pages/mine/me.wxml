@@ -15,10 +15,10 @@
   <view class="scroll-view">
     <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
       <view style="width: {{stv.windowWidth}}px;" wx:for="{{tabs}}" wx:key="unique">
-        <scroll-view scroll-y="true" class="container" bindscrolltolower="lower">
+        <scroll-view scroll-y="true" style="height:{{stv.scrollHeight}}px;" class="container" bindscrolltolower="lower">
           <block wx:for="{{activeTab==0?epigramList:collectList}}">
-            <view class="feed-item" style='background:{{item.color}}'>
-              <view class="feed-source">
+            <view class="feed-item" style='background:{{item.color}}' id='{{item.objectId}}' bindtap='itemClick'>
+              <view class="feed-source" style="display:{{activeTab==0?'none':'block'}}">
                 <view class="avatar">
                   <image src="{{item.avatarUrl}}"></image>
                 </view>
@@ -28,18 +28,16 @@
               <view class="feed-content">
                 <view class="answer-body">
                   <view bindtap="bindItemTap">
-                    <text class="answer-txt" aid="{{answer_id}}">{{item.say}}</text>
+                    <text class="answer-txt-list" aid="{{answer_id}}">{{item.say}}</text>
                   </view>
-                  <view class="answer-actions" style='display: none' bindtap="bindItemTap">
-                    <view class="like dot">
-                      <a>{{item.good}} 顶</a>
+                  <view class="answer-actions" bindtap="bindItemTap">
+                    <view class="like ">
+                      <a>{{item.good}} 👍</a>
                     </view>
-                    <view class="comments dot">
-                      <a>{{item.hug}} 踩 </a>
+
+                    <view class="follow-it" style="display:{{activeTab==0?'block':'none'}}">
+                      <a>{{item.createdAt}}</a>
                     </view>
-                    <!--<view class="follow-it">
-                            <a>关注问题</a>
-                        </view>-->
                   </view>
                 </view>
               </view>

@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="feed-item" style='background:{{epigram.color}}'>
+  <view class="feed-item" style='background:{{epigram.color}};'>
     <view class="feed-source">
       <a>
         <view class="avatar">
@@ -11,16 +11,16 @@
     </view>
     <view class="feed-content">
       <view class="answer-body">
-        <view bindtap="bindItemTap">
+        <view style='width:100%;min-height:400rpx;'>
           <text class="answer-txt" aid="{{answer_id}}">{{epigram.say}}</text>
         </view>
-        <view class="answer-actions" bindtap="bindItemTap">
+        <view class="answer-actions">
           <view class="like" bindtap='onGoodClick'>
             <a>{{epigram.good}} 👍</a>
           </view>
-          <view class="follow-it" bindtap='onShareClick'>
-             分享
-          </view>
+           <view class="follow-it" bindtap='onShareClick'>
+            复制
+          </view> 
         </view>
       </view>
     </view>

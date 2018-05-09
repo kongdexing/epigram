@@ -1,6 +1,6 @@
 <view>
   <form bindsubmit="formSubmit">
-    <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来" placeholder-style="color:white;" maxlength='200' auto-focus='true' focus='true' />
+    <textarea class='push-area ' style='background:{{broadColor}};' bindblur='contentInput' placeholder="有心事，说出来" placeholder-style="color:white;" maxlength='102400' auto-focus='true' focus='true' />
 
     <!--多彩板 gradview  -->
     <view>
@@ -13,7 +13,7 @@
       </view>
     </view>
 
-    <button style='width:40%;marginTop:20rpx;' form-type="submit">提交</button>
+    <button style='width:40%;margin-top:40rpx;' form-type="submit">提交</button>
 
   </form>
 </view>

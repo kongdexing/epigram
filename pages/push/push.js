@@ -25,8 +25,6 @@ Page({
   },
 
   contentInput: function (e) {
-    console.log("32424：" + e);
-
     this.setData({
       epigramVal: e.detail.value
     })
