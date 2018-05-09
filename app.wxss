@@ -72,16 +72,18 @@
   font-size: 35rpx;
   font-weight: 6px;
   color: #ffffff;
-  letter-spacing: 2rpx;
+  letter-spacing: 5rpx;
+  display: -webkit-box; 
+  line-height: 43rpx; 
 }
 
 .container .feed-item .feed-content .answer-body .answer-txt-list{
   font-size: 35rpx;
   font-weight: 6px;
   color: #ffffff;
-  letter-spacing: 2rpx;
+  letter-spacing: 4rpx;
   display: -webkit-box; 
-  line-height: 40rpx; 
+  line-height: 42rpx; 
   word-break: break-all; 
   -webkit-box-orient: vertical; 
   -webkit-line-clamp:5; 

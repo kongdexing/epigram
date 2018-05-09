@@ -32,32 +32,41 @@ Page({
         console.log('the result length is ' + res.data.length);
 
         if (res.data.length > 0) {
+          var exist = false;
           //循环
           res.data.forEach((item) => {
             if (item.objectId == that.data.objectId) {
               that.setData({
                 epigram: item
               });
+              exist = true;
               console.log("item object id " + item.objectId + "  " + item.say);
               return;
             }
-          })
+          });
+
+          if (!exist) {
+            getEpigram();
+          }
         } else {
           //网络获取数据
           getEpigram();
         }
       },
+      fail: function (er) {
+        getEpigram();
+      }
     })
 
   },
 
-  onGoodClick:function(e){
+  onGoodClick: function (e) {
     console.log('onGoodClick');
     //点赞
     var Epigram = Bmob.Object.extend("epigram");
     var queryE = new Bmob.Query(Epigram);
-    queryE.get(this.data.objectId,{
-      success:function(result){
+    queryE.get(this.data.objectId, {
+      success: function (result) {
         var good = result.attributes.good;
 
         if (good == undefined) {
@@ -80,11 +89,11 @@ Page({
 
   },
 
-  onShareAppMessage:function(){
+  onShareAppMessage: function () {
     return {
       // title: '悄悄说心事',
       // desc: '来自悄悄说的经典语句',
-      path: '/pages/detail/detail?id='+this.data.epigram.objectId
+      path: '/pages/detail/detail?id=' + this.data.epigram.objectId
     }
   },
 
